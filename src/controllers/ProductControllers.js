@@ -1,16 +1,17 @@
-import Product from "../models/Product";
-import {uuid} from 'uuidv4';
+import ProductRepository from '../repositories/ProductRepository';
 
 class ProductController {
     async store(req,res){
-        const {name, price, quantity} = req.body;
+        const productPayload = req.body;
 
-        const product = await Product.create({
-            id:uuid(),
-            name,
-            price,
-            quantity
-        });
+        const product = await ProductRepository.create(productPayload);
+
+        return res.json(product);
+    }
+
+    async getByID(req,res){
+        const { id } = req.params;
+        const product = await ProductRepository.getByID(id);
 
         return res.json(product);
     }

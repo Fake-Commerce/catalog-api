@@ -14,6 +14,8 @@ const ProductSchema = new Schema({
         type:Number,
         default:0
     }
-})
+}, {
+    versionKey: false,
+});
 
-export default model('Produt', ProductSchema);
+export default model('Product', ProductSchema);
