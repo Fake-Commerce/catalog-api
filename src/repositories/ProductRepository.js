@@ -1,5 +1,6 @@
 import Product from "../models/Product";
 import { uuid } from 'uuidv4';
+import res from "express/lib/response";
 
 class ProductRepository {
     async create({ name = '', price = 0, quantity = 0 }) {
@@ -13,13 +14,30 @@ class ProductRepository {
         return product;
     }
 
+    async index() {
+        const products = await Product.find();
+
+        return products;
+    }
+
     async getByID(id) {
-        return {
-            id,
-            name: "dove",
-            price: 1,
-            quantity: 10,
-        }
+        const product = await Product.findById(id);
+        return product;
+    }
+    
+    async update(id, productData) {
+        const product = await Product.findById(id);
+
+        Object.assign(product, productData);
+
+        await product.save();
+        return product;
+    
+    }
+
+    async delete(id) {
+        const product = await Product.findById(id);
+        await product.remove();
     }
 }
 
